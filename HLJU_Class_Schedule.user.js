@@ -3,7 +3,7 @@
 // @namespace   https://fuyuhin.me
 // @description Export your classes to a ics file.
 // @include     http://*.hlju.edu.cn/xsxk/index.xk
-// @version     0.1
+// @version     0.2
 // @grant       none
 // ==/UserScript==
 function get_first_week_num(week_sequence){
@@ -143,8 +143,8 @@ function Event(class_info){
         var ics_vevent = '';
         var lessons = class_info.pkxxList;
         for (var i in lessons) {
-            var event_begin = 'BEGIN:VEVENT\n';
-            var event_end = 'END:VEVENT\n';
+            var event_begin = 'BEGIN:VEVENT\r\n';
+            var event_end = 'END:VEVENT\r\n';
             var dt_start = get_date(get_first_week_num(lessons[i].zcbh), 
                                     parseInt(lessons[i].skxq), 
                                     lesson_start_time(lessons[i].ksjc));
@@ -152,20 +152,20 @@ function Event(class_info){
                                   parseInt(lessons[i].skxq), 
                                   lesson_end_time(lessons[i].jsjc));
             ics_vevent = ics_vevent + event_begin + 
-                    'DTSTART;TZID=Asia/Shanghai:' + date_to_ics_format_string(dt_start) + '\n' +
-                    'DTEND;TZID=Asia/Shanghai:' + date_to_ics_format_string(dt_end) + '\n' +
+                    'DTSTART;TZID=Asia/Shanghai:' + date_to_ics_format_string(dt_start) + '\r\n' +
+                    'DTEND;TZID=Asia/Shanghai:' + date_to_ics_format_string(dt_end) + '\r\n' +
                     get_repead_rule(lessons[i].zcbh, lessons[i].skxq, 
                         get_date(get_last_week_num(lessons[i].zcbh), 
                             parseInt(lessons[i].skxq), 
-                            lesson_end_time(lessons[i].jsjc))) + '\n' +
-                    'DTSTAMP:20160822T125937Z\n' + 
-                    'UID:' + this.uid + i.toString() + '\n' +
-                    'LOCATION:' + lessons[i].jsmc + '\n' + 
-                    'DESCRIPTION:' + lessons[i].zcmc + '\n' + 
-                    'SEQUENCE:0\n' + 
-                    'STATUS:CONFIRMED\n' + 
-                    'SUMMARY:' + this.summary + ' ' + this.teacher + '\n' +
-                    'TRANSP:OPAQUE\n' + 
+                            lesson_end_time(lessons[i].jsjc))) + '\r\n' +
+                    'DTSTAMP:20160822T125937Z\r\n' + 
+                    'UID:' + this.uid + i.toString() + '\r\n' +
+                    'LOCATION:' + lessons[i].jsmc + '\r\n' + 
+                    'DESCRIPTION:' + lessons[i].zcmc + '\r\n' + 
+                    'SEQUENCE:0\r\n' + 
+                    'STATUS:CONFIRMED\r\n' + 
+                    'SUMMARY:' + this.summary + ' ' + this.teacher + '\r\n' +
+                    'TRANSP:OPAQUE\r\n' + 
                     event_end;
         }
         return ics_vevent;
@@ -179,8 +179,26 @@ for (var key in yxJxbList){
         ics_vevents = ics_vevents + event.print();
     }
 }
-var event_begin = 'BEGIN:VCALENDAR\nPRODID:Fuyuhin.me\nVERSION:2.0\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\nX-WR-CALNAME:HLJU Class Schedule\nX-WR-TIMEZONE:Asia/Shanghai\nBEGIN:VTIMEZONE\nTZID:Asia/Shanghai\nX-LIC-LOCATION:Asia/Shanghai\nBEGIN:STANDARD\nTZOFFSETFROM:+0800\nTZOFFSETTO:+0800\nTZNAME:CST\nDTSTART:19700101T000000\nEND:STANDARD\nEND:VTIMEZONE\n';
+var event_begin = 'BEGIN:VCALENDAR\r\nPRODID:Fuyuhin.me\r\nVERSION:2.0\r\nCALSCALE:GREGORIAN\r\nMETHOD:PUBLISH\r\nX-WR-CALNAME:HLJU Class Schedule\r\nX-WR-TIMEZONE:Asia/Shanghai\r\nBEGIN:VTIMEZONE\r\nTZID:Asia/Shanghai\r\nX-LIC-LOCATION:Asia/Shanghai\r\nBEGIN:STANDARD\r\nTZOFFSETFROM:+0800\r\nTZOFFSETTO:+0800\r\nTZNAME:CST\r\nDTSTART:19700101T000000\r\nEND:STANDARD\r\nEND:VTIMEZONE\r\n';
 var event_end = 'END:VCALENDAR';
 var ics_content = event_begin + ics_vevents + event_end;
 // console.log(ics_content);
-alert(ics_content);
+// alert(ics_content);
+
+function download(fileName, blob){
+    var aLink = document.createElement('a');
+    var evt = document.createEvent("MouseEvents");
+    evt.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    aLink.download = fileName;
+    aLink.href = URL.createObjectURL(blob);
+    aLink.dispatchEvent(evt);
+}
+ 
+
+function stringToBlob(text) {
+    var blob = new Blob([text], {"type":'text/plain; charset="UTF-8"'});
+    return blob;
+}
+
+var blob = stringToBlob(ics_content);
+download('Class.ics', blob);
