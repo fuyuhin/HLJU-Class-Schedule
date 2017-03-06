@@ -125,7 +125,7 @@ function fuck(week_fuck, weekday_fuck)
 }
 
 function get_date(week, weekday, time){
-    var first_monday = new Date("2016-08-22");
+    var first_monday = new Date("2017-02-27");
     var days = 0;
     days = fuck(week, parseInt(weekday));
     first_monday.setDate(first_monday.getDate() + days);
