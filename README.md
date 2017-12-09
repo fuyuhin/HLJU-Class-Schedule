@@ -1,12 +1,12 @@
+### 声明
+我也毕业了，不能再登录学校的选课系统，故不再维护。
+
 ### 简介
 如何将课程表导入日历？
 
 几年前科协 VC 组的沈学长给出了一个优雅的办法：把课程表导出为 iCalendar 文件。[iCalendar][1] 是“日历数据交换”的标准。绝大多数邮箱服务商，如 Outlook、Gmail 等，都提供日历同步服务，并且支持该标准。而绝大多数的移动设备平台，如 Android、iOS、Windows Phone 等，都**原生**支持该同步功能。只要用你的邮箱帐号登录这些设备，就能将日历事件同步到系统日历之中。
 
 因为学长已经毕业，而且选课系统也进行了更换，学长原来做的软件[“黑龙江大学课表日程助手”][2]已经不能用了。为了继承学长的火之意志，我开发了这个项目。
-### 效果图
-![](Outlook.png)
-![](Android)
 
 ### 使用方法
 1. 从课程表导出 ics 文件
@@ -23,6 +23,10 @@
     + [在 iPhone、iPad 或 iPod touch 上设置电子邮件帐户][7]
     + [在 Windows Phone 上设置电子邮件][8]
 4. 登录成功后日历就会自动同步
+
+### 效果图
+![](Outlook.png)
+![](Android.jpg)
 
 [1]:https://zh.wikipedia.org/wiki/ICalendar
 [2]:https://github.com/chrisniael/whatclass.cn#%E9%BB%91%E9%BE%99%E6%B1%9F%E5%A4%A7%E5%AD%A6%E8%AF%BE%E8%A1%A8%E6%97%A5%E7%A8%8B%E5%8A%A9%E6%89%8B
